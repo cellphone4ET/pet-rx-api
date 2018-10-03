@@ -2,13 +2,13 @@
 
 require("dotenv").config();
 const { PORT, DATABASE_URL } = require("./config");
-const { router: petsRouter, pet: pet } = require("./pets");
-const { router: usersRouter } = require("./users");
-const { router: authRouter, localStrategy, jwtStrategy } = require("./auth");
+const { router: petsRouter, Pet: Pet } = require("./pets");
+// const { router: usersRouter } = require("./users");
+// const { router: authRouter, localStrategy, jwtStrategy } = require("./auth");
 
 const express = require("express");
 const morgan = require("morgan");
-const passport = require("passport");
+// const passport = require("passport");
 const mongoose = require("mongoose");
 
 mongoose.Promise = global.Promise;
@@ -29,12 +29,12 @@ app.use(function(req, res, next) {
 app.use(morgan("common"));
 app.use(express.json());
 
-app.use(passport.initialize());
-passport.use("local", localStrategy);
-passport.use(jwtStrategy);
+// app.use(passport.initialize());
+// passport.use("local", localStrategy);
+// passport.use(jwtStrategy);
 
-app.use("/api/users/", usersRouter);
-app.use("/api/auth/", authRouter);
+// app.use("/api/users/", usersRouter);
+// app.use("/api/auth/", authRouter);
 app.use("/api/pets", petsRouter);
 
 // start server
