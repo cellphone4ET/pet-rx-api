@@ -22,7 +22,7 @@ router.get("/", (req, res) => {
 
 // add back auth
 router.get("/:id", (req, res) => {
-  Pet.findById()
+  Pet.findById(req.params.id)
     .then(pet => res.json(pet.serialize()))
     .catch(err => {
       console.error(err);
@@ -30,6 +30,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
+// add back auth
 router.post("/", jsonParser, (req, res) => {
   console.log(req.body);
   // const requiredFields = ["name"];
@@ -69,17 +70,17 @@ router.post("/", jsonParser, (req, res) => {
 });
 
 // add back auth
-// router.delete("/:id", (req, res) => {
-//   Pet.findByIdAndRemove()
-//     .then(() => {
-//       res.status(204).json({ message: "success" });
-//     })
-//     .catch(err => {
-//       console.error(err);
-//       res.status(500).json({ error: "something went wrong" });
-//     });
-// });
-//
+router.delete("/:id", (req, res) => {
+  Pet.findByIdAndRemove()
+    .then(() => {
+      res.status(204).json({ message: "success" });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: "something went wrong" });
+    });
+});
+
 // router.put("/:id", jwtAuth, (req, res) => {
 //   if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
 //     res.status(400).json({
