@@ -29,48 +29,48 @@ router.get("/:id", (req, res) => {
       res.status(500).json({ error: "something went wrong" });
     });
 });
-//
-// router.post("/", jwtAuth, jsonParser, (req, res) => {
-//   const requiredFields = ["name"];
-//   for (let i = 0; i < requiredFields.length; i++) {
-//     const field = requiredFields[i];
-//     if (!(field in req.body)) {
-//       const message = `Missing \`${field}\` in request body`;
-//       console.error(message);
-//       return res.status(400).send(message);
-//     }
-//   }
-//
-//   Pet.create({
-//     basic_information: {
-//       name: req.body.basic_information.name,
-//       photo_url: req.body.this.basic_information.photo_url,
-//       breed: req.body.basic_information.breed,
-//       age: req.body.basic_information.age,
-//       notes: req.body.basic_information.notes
-//     },
-//     veterinary_information: {
-//       name: req.body.veterinary_information.name,
-//       phone: req.body.veterinary_information.phone
-//     },
-//     health_conditions: {
-//       allergies: req.body.health_conditions.allergies,
-//       chronic_conditions: req.body.health_conditions.chronic_conditions
-//     },
-//     checkups: req.body.checkups,
-//     vaccinations: req.body.vaccinations,
-//     weight_history: req.body.weight_history,
-//     user: req.user.id
-//   })
-//     .then(Pet => res.status(201).json(Pet.serialize()))
-//     .catch(err => {
-//       console.error(err);
-//       res.status(500).json({ error: "Something went wrong" });
-//     });
-// });
-//
-// router.delete("/:id", jwtAuth, (req, res) => {
-//   Pet.findByIdAndRemove(req.params.id)
+
+router.post("/", jsonParser, (req, res) => {
+  console.log(req.body);
+  // const requiredFields = ["name"];
+  // for (let i = 0; i < requiredFields.length; i++) {
+  //   const field = requiredFields[i];
+  //   if (!(field in req.body)) {
+  //     const message = `Missing \`${field}\` in request body`;
+  //     console.error(message);
+  //     return res.status(400).send(message);
+  //   }
+  // }
+  Pet.create({
+    basic_information: {
+      name: req.body.basic_information.name,
+      photo_url: req.body.basic_information.photo_url,
+      breed: req.body.basic_information.breed,
+      age: req.body.basic_information.age,
+      notes: req.body.basic_information.notes
+    },
+    veterinary_information: {
+      name: req.body.veterinary_information.name,
+      phone: req.body.veterinary_information.phone
+    },
+    health_conditions: {
+      allergies: req.body.health_conditions.allergies,
+      chronic_conditions: req.body.health_conditions.chronic_conditions
+    },
+    checkups: req.body.checkups,
+    vaccinations: req.body.vaccinations,
+    weight_history: req.body.weight_history
+  })
+    .then(Pet => res.status(201).json(Pet.serialize()))
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: "Something went wrong" });
+    });
+});
+
+// add back auth
+// router.delete("/:id", (req, res) => {
+//   Pet.findByIdAndRemove()
 //     .then(() => {
 //       res.status(204).json({ message: "success" });
 //     })
