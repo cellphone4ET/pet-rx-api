@@ -8,6 +8,7 @@ const { jwtStrategy } = require("../auth");
 const jsonParser = bodyParser.json();
 const jwtAuth = passport.authenticate("jwt", { session: false });
 
+// add back auth
 router.get("/", (req, res) => {
   Pet.find()
     .then(pets => {
@@ -19,14 +20,15 @@ router.get("/", (req, res) => {
     });
 });
 
-// router.get("/:id", jwtAuth, (req, res) => {
-//   Pet.findById(req.params.id)
-//     .then(pet => res.json(pet.serialize()))
-//     .catch(err => {
-//       console.error(err);
-//       res.status(500).json({ error: "something went wrong" });
-//     });
-// });
+// add back auth
+router.get("/:id", (req, res) => {
+  Pet.findById()
+    .then(pet => res.json(pet.serialize()))
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: "something went wrong" });
+    });
+});
 //
 // router.post("/", jwtAuth, jsonParser, (req, res) => {
 //   const requiredFields = ["name"];
