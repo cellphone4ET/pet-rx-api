@@ -71,7 +71,7 @@ router.post("/", jsonParser, (req, res) => {
 
 // add back auth
 router.delete("/:id", (req, res) => {
-  Pet.findByIdAndRemove()
+  Pet.findByIdAndRemove(req.params.id)
     .then(() => {
       res.status(204).json({ message: "success" });
     })
