@@ -1,7 +1,6 @@
 "use strict";
 
 const mongoose = require("mongoose");
-const moment = require("moment");
 
 mongoose.Promise = global.Promise;
 

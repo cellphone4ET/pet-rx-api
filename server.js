@@ -1,49 +1,53 @@
 "use strict";
 
 require("dotenv").config();
+const { PORT, DATABASE_URL } = require("./config");
+// const { router: petsRouter, pet: pet } = require("./pets");
+// const { router: usersRouter } = require("./users");
+// const { router: authRouter, localStrategy, jwtStrategy } = require("./auth");
+
 const express = require("express");
 const morgan = require("morgan");
+// const passport = require("passport");
 const mongoose = require("mongoose");
-const passport = require("passport");
 
 mongoose.Promise = global.Promise;
-
-const { PORT, DATABASE_URL } = require("./config");
 const app = express();
 
-const { router: petsRouter, pet: pet } = require("./pets");
-const { router: usersRouter } = require("./users");
-const { router: authRouter, localStrategy, jwtStrategy } = require("./auth");
-
-// logging
-app.use(morgan("common"));
-app.use(express.json());
-
-// CORS
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Content-Type,Authorization");
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
-  if (req.method === "OPTIONS") {
-    return res.send(204);
-  }
-  next();
+app.get("/api/*", (req, res) => {
+  res.json({ ok: true });
 });
 
-app.use(passport.initialize());
-passport.use("local", localStrategy);
-passport.use(jwtStrategy);
-
-app.use("/api/users/", usersRouter);
-app.use("/api/auth/", authRouter);
-app.use("/api/pets", petsRouter);
-
+//
+// logging
+app.use(morgan("common"));
+// app.use(express.json());
+//
+// // CORS
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Content-Type,Authorization");
+//   res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
+//   if (req.method === "OPTIONS") {
+//     return res.send(204);
+//   }
+//   next();
+// });
+//
+// app.use(passport.initialize());
+// passport.use("local", localStrategy);
+// passport.use(jwtStrategy);
+//
+// app.use("/api/users/", usersRouter);
+// app.use("/api/auth/", authRouter);
+// app.use("/api/pets", petsRouter);
+//
 // start server
 let server;
 
 function runServer(DATABASE_URL, port = PORT) {
   return new Promise((resolve, reject) => {
-    mongoose.connect(DATABASE_URL, err => {
+    mongoose.connect(DATABASE_URL, { useNewUrlParser: true }, err => {
       if (err) {
         return reject(err);
       }
