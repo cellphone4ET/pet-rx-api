@@ -23,7 +23,7 @@ const petSchema = mongoose.Schema({
   checkups: [{ type: String }],
   vaccinations: [{ type: String }],
   weight_history: [{ type: String }]
-  // user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" }
+  user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" }
 });
 
 petSchema.methods.serialize = function() {
