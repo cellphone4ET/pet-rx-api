@@ -32,16 +32,15 @@ router.get("/:id", (req, res) => {
 
 // add back auth
 router.post("/", jsonParser, (req, res) => {
-  console.log(req.body);
-  // const requiredFields = ["name"];
-  // for (let i = 0; i < requiredFields.length; i++) {
-  //   const field = requiredFields[i];
-  //   if (!(field in req.body)) {
-  //     const message = `Missing \`${field}\` in request body`;
-  //     console.error(message);
-  //     return res.status(400).send(message);
-  //   }
-  // }
+  const requiredFields = ["basic_information"];
+  for (let i = 0; i < requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if (!(field in req.body)) {
+      const message = `Missing \`${field}\` in request body`;
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
   Pet.create({
     basic_information: {
       name: req.body.basic_information.name,
@@ -81,37 +80,33 @@ router.delete("/:id", (req, res) => {
     });
 });
 
-// router.put("/:id", jwtAuth, (req, res) => {
-//   if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-//     res.status(400).json({
-//       error: "Request path id and request body id values must match"
-//     });
-//   }
-//
-//   const updated = {};
-//   const updateableFields = [
-//     "basic_information.name",
-//     "basic_information.photo_url",
-//     "basic_information.breed",
-//     "basic_information.age",
-//     "basic_information.notes",
-//     "veterinary_information.name",
-//     "veterinary_information.phone",
-//     "ealth_conditions.allergies",
-//     "ealth_conditions.chronic_conditions",
-//     "checkups",
-//     "vaccinations",
-//     "weight_history"
-//   ];
-//   updateableFields.forEach(field => {
-//     if (field in req.body) {
-//       updated[field] = req.body[field];
-//     }
-//   });
-//
-//   Pet.findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
-//     .then(updatedPet => res.status(204).end())
-//     .catch(err => res.status(500).json({ message: "Something went wrong" }));
-// });
+// add back auth
+router.put("/:id", (req, res) => {
+  console.log(req.params.id, req.body);
+  if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+    res.status(400).json({
+      error: "Request path id and request body id values must match"
+    });
+  }
+
+  const updated = {};
+  const updateableFields = [
+    "basic_information",
+    "veterinary_information",
+    "health_conditions",
+    "checkups",
+    "vaccinations",
+    "weight_history"
+  ];
+  updateableFields.forEach(field => {
+    if (field in req.body) {
+      updated[field] = req.body[field];
+    }
+  });
+
+  Pet.findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
+    .then(updatedPet => res.status(204).end())
+    .catch(err => res.status(500).json({ message: "Something went wrong" }));
+});
 
 module.exports = { router };

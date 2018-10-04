@@ -33,8 +33,7 @@ petSchema.methods.serialize = function() {
       photo_url: this.basic_information.photo_url,
       breed: this.basic_information.breed,
       age: this.basic_information.age,
-      notes: this.basic_information.notes,
-      id: this._id
+      notes: this.basic_information.notes
     },
     veterinary_information: {
       name: this.veterinary_information.name,
@@ -46,7 +45,8 @@ petSchema.methods.serialize = function() {
     },
     checkups: this.checkups,
     vaccinations: this.vaccinations,
-    weight_history: this.weight_history
+    weight_history: this.weight_history,
+    id: this._id
   };
 };
 

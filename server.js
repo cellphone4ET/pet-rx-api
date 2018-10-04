@@ -1,13 +1,14 @@
 "use strict";
 
 require("dotenv").config();
-const { PORT, DATABASE_URL } = require("./config");
+const { PORT, DATABASE_URL, CLIENT_ORIGIN } = require("./config");
 const { router: petsRouter, Pet: Pet } = require("./pets");
 // const { router: usersRouter } = require("./users");
 // const { router: authRouter, localStrategy, jwtStrategy } = require("./auth");
 
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
 // const passport = require("passport");
 const mongoose = require("mongoose");
 
@@ -15,15 +16,11 @@ mongoose.Promise = global.Promise;
 const app = express();
 
 // CORS
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Content-Type,Authorization");
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
-  if (req.method === "OPTIONS") {
-    return res.send(204);
-  }
-  next();
-});
+app.use(
+  cors({
+    origin: CLIENT_ORIGIN
+  })
+);
 
 // logging
 app.use(morgan("common"));
