@@ -8,9 +8,8 @@ const { jwtStrategy } = require("../auth");
 const jsonParser = bodyParser.json();
 const jwtAuth = passport.authenticate("jwt", { session: false });
 
-// add back auth
-router.get("/", (req, res) => {
-  Pet.find()
+router.get("/", jwtAuth, (req, res) => {
+  Pet.find({ user: req.user.id })
     .then(pets => {
       res.json(pets.map(pet => pet.serialize()));
     })
@@ -20,8 +19,7 @@ router.get("/", (req, res) => {
     });
 });
 
-// add back auth
-router.get("/:id", (req, res) => {
+router.get("/:id", jwtAuth, (req, res) => {
   Pet.findById(req.params.id)
     .then(pet => res.json(pet.serialize()))
     .catch(err => {
@@ -30,8 +28,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// add back auth
-router.post("/", jsonParser, (req, res) => {
+router.post("/", jwtAuth, jsonParser, (req, res) => {
   const requiredFields = ["basic_information"];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
@@ -59,7 +56,8 @@ router.post("/", jsonParser, (req, res) => {
     },
     checkups: req.body.checkups,
     vaccinations: req.body.vaccinations,
-    weight_history: req.body.weight_history
+    weight_history: req.body.weight_history,
+    user: req.user.id
   })
     .then(Pet => res.status(201).json(Pet.serialize()))
     .catch(err => {
@@ -68,8 +66,7 @@ router.post("/", jsonParser, (req, res) => {
     });
 });
 
-// add back auth
-router.delete("/:id", (req, res) => {
+router.delete("/:id", jwtAuth, (req, res) => {
   Pet.findByIdAndRemove(req.params.id)
     .then(() => {
       res.status(204).json({ message: "success" });
@@ -80,8 +77,7 @@ router.delete("/:id", (req, res) => {
     });
 });
 
-// add back auth
-router.put("/:id", (req, res) => {
+router.put("/:id", jwtAuth, (req, res) => {
   console.log(req.params.id, req.body);
   if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
     res.status(400).json({
