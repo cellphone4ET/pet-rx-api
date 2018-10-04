@@ -89,22 +89,7 @@ router.put("/:id", (req, res) => {
     });
   }
 
-  const updated = {};
-  const updateableFields = [
-    "basic_information",
-    "veterinary_information",
-    "health_conditions",
-    "checkups",
-    "vaccinations",
-    "weight_history"
-  ];
-  updateableFields.forEach(field => {
-    if (field in req.body) {
-      updated[field] = req.body[field];
-    }
-  });
-
-  Pet.findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
+  Pet.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
     .then(updatedPet => res.status(204).end())
     .catch(err => res.status(500).json({ message: "Something went wrong" }));
 });
