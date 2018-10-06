@@ -23,7 +23,7 @@ app.use(
 );
 
 // logging
-app.use(morgan("common"));
+app.use(morgan("dev"));
 app.use(express.json());
 
 app.use(passport.initialize());

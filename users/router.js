@@ -83,8 +83,9 @@ router.post("/", jsonParser, (req, res) => {
   let { username, password } = req.body;
 
   return User.find({ username })
-    .count()
+    .countDocuments()
     .then(count => {
+      console.log("count ", count);
       if (count > 0) {
         return Promise.reject({
           code: 422,
@@ -96,6 +97,7 @@ router.post("/", jsonParser, (req, res) => {
       return User.hashPassword(password);
     })
     .then(hash => {
+      console.log("1");
       return User.create({
         username,
         password: hash
@@ -105,18 +107,13 @@ router.post("/", jsonParser, (req, res) => {
       return res.status(201).json(user.serialize());
     })
     .catch(err => {
+      console.log("2");
       if (err.reason === "ValidationError") {
         return res.status(err.code).json(err);
       }
+      console.log(err);
       res.status(500).json({ code: 500, message: "Internal server error" });
     });
 });
-
-// // TBDeleted
-// router.get('/', (req, res) => {
-//   return User.find()
-//     .then(users => res.json(users.map(user => user.serialize())))
-//     .catch(err => res.status(500).json({message: 'Internal server error'}));
-// });
 
 module.exports = { router };
