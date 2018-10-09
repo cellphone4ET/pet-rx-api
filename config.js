@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-exports.CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:8080";
+exports.CLIENT_ORIGIN = "http://localhost:3000" || process.env.CLIENT_ORIGIN;
 exports.DATABASE_URL = process.env.DATABASE_URL || "mongodb://localhost/pet-rx";
 exports.TEST_DATABASE_URL =
   process.env.TEST_DATABASE_URL || "mongodb://localhost/pet-rx-test";
