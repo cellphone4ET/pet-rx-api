@@ -32,7 +32,7 @@ passport.use(jwtStrategy);
 
 app.use("/api/users/", usersRouter);
 app.use("/api/auth/", authRouter);
-app.use("/api/pets", petsRouter);
+app.use("/api/pets/", petsRouter);
 
 // start server
 let server;

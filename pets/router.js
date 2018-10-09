@@ -11,7 +11,7 @@ const jwtAuth = passport.authenticate("jwt", { session: false });
 router.get("/", jwtAuth, (req, res) => {
   Pet.find({ user: req.user.id })
     .then(pets => {
-      res.json(pets.map(pet => pet.serialize()));
+      return res.json(pets.map(pet => pet.serialize()));
     })
     .catch(err => {
       console.error(err);
