@@ -39,21 +39,15 @@ router.post("/", jwtAuth, jsonParser, (req, res) => {
     }
   }
   Pet.create({
-    basic_information: {
-      name: req.body.basic_information.name,
-      photo_url: req.body.basic_information.photo_url,
-      breed: req.body.basic_information.breed,
-      age: req.body.basic_information.age,
-      notes: req.body.basic_information.notes
-    },
-    veterinary_information: {
-      name: req.body.veterinary_information.name,
-      phone: req.body.veterinary_information.phone
-    },
-    health_conditions: {
-      allergies: req.body.health_conditions.allergies,
-      chronic_conditions: req.body.health_conditions.chronic_conditions
-    },
+    name: req.body.name,
+    photo_url: req.body.photo_url,
+    breed: req.body.breed,
+    age: req.body.age,
+    notes: req.body.notes,
+    vet_name: req.body.vet_name,
+    phone: req.body.phone,
+    allergies: req.body.health_conditions.allergies,
+    chronic_conditions: req.body.chronic_conditions,
     checkups: req.body.checkups,
     vaccinations: req.body.vaccinations,
     weight_history: req.body.weight_history,

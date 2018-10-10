@@ -5,21 +5,15 @@ const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
 const petSchema = mongoose.Schema({
-  basic_information: {
-    name: { type: String, required: true },
-    photo_url: { type: String },
-    breed: { type: String },
-    age: { type: String },
-    notes: { type: String }
-  },
-  veterinary_information: {
-    name: { type: String },
-    phone: { type: String }
-  },
-  health_conditions: {
-    allergies: { type: String },
-    chronic_conditions: { type: String }
-  },
+  name: { type: String, required: true },
+  photo_url: { type: String },
+  breed: { type: String },
+  age: { type: String },
+  notes: { type: String },
+  vet_name: { type: String },
+  phone: { type: String },
+  allergies: { type: String },
+  chronic_conditions: { type: String },
   checkups: [{ type: String }],
   vaccinations: [{ type: String }],
   weight_history: [{ type: String }],
@@ -28,21 +22,15 @@ const petSchema = mongoose.Schema({
 
 petSchema.methods.serialize = function() {
   return {
-    basic_information: {
-      name: this.basic_information.name,
-      photo_url: this.basic_information.photo_url,
-      breed: this.basic_information.breed,
-      age: this.basic_information.age,
-      notes: this.basic_information.notes
-    },
-    veterinary_information: {
-      name: this.veterinary_information.name,
-      phone: this.veterinary_information.phone
-    },
-    health_conditions: {
-      allergies: this.health_conditions.allergies,
-      chronic_conditions: this.health_conditions.chronic_conditions
-    },
+    name: this.name,
+    photo_url: this.photo_url,
+    breed: this.breed,
+    age: this.age,
+    notes: this.notes,
+    vet_name: this.vet_name,
+    phone: this.phone,
+    allergies: this.allergies,
+    chronic_conditions: this.chronic_conditions,
     checkups: this.checkups,
     vaccinations: this.vaccinations,
     weight_history: this.weight_history,
