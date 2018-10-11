@@ -29,7 +29,7 @@ router.get("/:id", jwtAuth, (req, res) => {
 });
 
 router.post("/", jwtAuth, jsonParser, (req, res) => {
-  const requiredFields = ["basic_information"];
+  const requiredFields = ["name"];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
@@ -46,7 +46,7 @@ router.post("/", jwtAuth, jsonParser, (req, res) => {
     notes: req.body.notes,
     vet_name: req.body.vet_name,
     phone: req.body.phone,
-    allergies: req.body.health_conditions.allergies,
+    allergies: req.body.allergies,
     chronic_conditions: req.body.chronic_conditions,
     checkups: req.body.checkups,
     vaccinations: req.body.vaccinations,

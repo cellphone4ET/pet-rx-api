@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
 const petSchema = mongoose.Schema({
-  name: { type: String },
+  name: { type: String, required: true },
   photo_url: { type: String },
   breed: { type: String },
   age: { type: String },
