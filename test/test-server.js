@@ -24,21 +24,15 @@ function seedPetData() {
   const seedData = [];
   for (let i = 1; i <= 10; i++) {
     seedData.push({
-      basic_information: {
-        name: faker.name.firstName(),
-        photo_url: faker.image.avatar(),
-        breed: faker.lorem.word(),
-        age: faker.random.number(60),
-        notes: faker.lorem.sentences()
-      },
-      veterinary_information: {
-        name: faker.name.firstName(),
-        phone: faker.lorem.word()
-      },
-      health_conditions: {
-        allergies: faker.lorem.word(),
-        chronic_conditions: faker.lorem.word()
-      },
+      name: faker.name.firstName(),
+      photo_url: faker.image.avatar(),
+      breed: faker.lorem.word(),
+      age: faker.random.number(60),
+      notes: faker.lorem.sentences(),
+      name: faker.name.firstName(),
+      phone: faker.lorem.word(),
+      allergies: faker.lorem.word(),
+      chronic_conditions: faker.lorem.word(),
       checkups: [faker.lorem.word()],
       vaccinations: [faker.lorem.word()],
       weight_history: [faker.lorem.word()]
@@ -98,23 +92,23 @@ describe("pet-rx api", function() {
     return closeServer();
   });
 
-  //GET endpoints
-  // describe("it should return all existing pets", function() {
-  //   it("should have status of 200", function() {
-  //     let res;
-  //     return chai
-  //       .request(app)
-  //       .get("/api/pets")
-  //       .set("Authorization", `Bearer ${test_token}`)
-  //       .then(function(_res) {
-  //         res = _res;
-  //         expect(res).to.have.status(200);
-  //         expect(res.body).to.have.lengthOf.at.least(1);
-  //         return Pet.count();
-  //       });
-  //     res.body.should.have.lengthOf(count);
-  //   });
-  // });
+  // GET endpoints
+  describe("it should return all existing pets", function() {
+    it("should have status of 200", function() {
+      let res;
+      return chai
+        .request(app)
+        .get("/api/pets")
+        .set("Authorization", `Bearer ${test_token}`)
+        .then(function(_res) {
+          res = _res;
+          expect(res).to.have.status(200);
+          expect(res.body).to.have.lengthOf.at.least(1);
+          return Pet.count();
+        });
+      res.body.should.have.lengthOf(count);
+    });
+  });
 
   // it("should return posts with the right fields", function() {
   //   let resFamilyMember;
