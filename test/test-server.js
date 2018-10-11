@@ -29,7 +29,7 @@ function seedPetData() {
       breed: faker.lorem.word(),
       age: faker.random.number(60),
       notes: faker.lorem.sentences(),
-      name: faker.name.firstName(),
+      vet_name: faker.name.firstName(),
       phone: faker.lorem.word(),
       allergies: faker.lorem.word(),
       chronic_conditions: faker.lorem.word(),
@@ -110,42 +110,46 @@ describe("pet-rx api", function() {
     });
   });
 
-  // it("should return posts with the right fields", function() {
-  //   let resFamilyMember;
-  //   return chai
-  //     .request(app)
-  //     .get("/api/family-members")
-  //     .set("Authorization", `Bearer ${test_token}`)
-  //     .then(function(res) {
-  //       expect(res).to.have.status(200);
-  //       expect(res).to.be.json;
-  //       expect(res.body).is.a("array");
-  //       expect(res.body).to.have.lengthOf.at.least(1);
-  //
-  //       res.body.forEach(function(familyMember) {
-  //         expect(familyMember).is.a("object");
-  //         expect(familyMember).to.include.keys(
-  //           "id",
-  //           "name",
-  //           "relation",
-  //           "birthday",
-  //           "simpleBirthdayDate",
-  //           "significant_other",
-  //           "anniversary",
-  //           "notes",
-  //           "photo_url"
-  //         );
-  //       });
-  //
-  //       resFamilyMember = res.body[0];
-  //       return FamilyMember.findById(resFamilyMember.id);
-  //     })
-  //     .then(familyMember => {
-  //       resFamilyMember.name.should.equal(familyMember.name);
-  //       expect(resFamilyMember.relation).to.equal(familyMember.relation);
-  //       expect(resFamilyMember.notes).to.equal(familyMember.notes);
-  //     });
-  // });
+  it("should return posts with the right fields", function() {
+    let resPet;
+    return chai
+      .request(app)
+      .get("/api/pets")
+      .set("Authorization", `Bearer ${test_token}`)
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        expect(res).to.be.json;
+        expect(res.body).is.a("array");
+        expect(res.body).to.have.lengthOf.at.least(1);
+
+        res.body.forEach(function(pet) {
+          expect(pet).is.a("object");
+          expect(pet).to.include.keys(
+            "id",
+            "name",
+            "photo_url",
+            "breed",
+            "age",
+            "notes",
+            "vet_name",
+            "phone",
+            "allergies",
+            "chronic_conditions",
+            "checkups",
+            "vaccinations",
+            "weight_history"
+          );
+        });
+
+        resPet = res.body[0];
+        return Pet.findById(resPet.id);
+      })
+      .then(pet => {
+        resPet.name.should.equal(pet.name);
+        expect(resPet.breed).to.equal(pet.breed);
+        expect(resPet.phone).to.equal(pet.phone);
+      });
+  });
   //
   // describe("POST endpoint", function() {
   //   it("should add a new family member", function() {
