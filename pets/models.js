@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
 const petSchema = mongoose.Schema({
-  name: { type: String, required: true },
+  name: { type: String },
   photo_url: { type: String },
   breed: { type: String },
   age: { type: String },
@@ -17,7 +17,7 @@ const petSchema = mongoose.Schema({
   checkups: [{ type: String }],
   vaccinations: [{ type: String }],
   weight_history: [{ type: String }],
-  user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" }
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
 });
 
 petSchema.methods.serialize = function() {
