@@ -205,60 +205,58 @@ describe("pet-rx api", function() {
         });
     });
   });
-  //
-  // describe("PUT endpoint", function() {
-  //   it("should update fields you send over", function() {
-  //     const updateData = {
-  //       name: "Mary",
-  //       relation: "mother",
-  //       significant_other: "Joseph"
-  //     };
-  //
-  //     return FamilyMember.findOne()
-  //       .then(familyMember => {
-  //         updateData.id = familyMember.id;
-  //
-  //         return chai
-  //           .request(app)
-  //           .put(`/api/family-members/${familyMember.id}`)
-  //           .set("Authorization", `Bearer ${test_token}`)
-  //           .send(updateData);
-  //       })
-  //
-  //       .then(res => {
-  //         res.should.have.status(204);
-  //         return FamilyMember.findById(updateData.id);
-  //       })
-  //
-  //       .then(familyMember => {
-  //         familyMember.name.should.equal(updateData.name);
-  //         familyMember.relation.should.equal(updateData.relation);
-  //         familyMember.significant_other.should.equal(
-  //           updateData.significant_other
-  //         );
-  //       });
-  //   });
-  // });
-  //
-  // describe("DELETE endpoint", function() {
-  //   it("should delete a post by id", function() {
-  //     let familyMember;
-  //
-  //     return FamilyMember.findOne()
-  //       .then(_familyMember => {
-  //         familyMember = _familyMember;
-  //         return chai
-  //           .request(app)
-  //           .delete(`/api/family-members/${familyMember.id}`)
-  //           .set("Authorization", `Bearer ${test_token}`);
-  //       })
-  //       .then(res => {
-  //         res.should.have.status(204);
-  //         return FamilyMember.findById(familyMember.id);
-  //       })
-  //       .then(_familyMember => {
-  //         should.not.exist(_familyMember);
-  //       });
-  //   });
-  // });
+
+  describe("PUT endpoint", function() {
+    it("should update fields you send over", function() {
+      const updateData = {
+        name: "loofah",
+        breed: "slug",
+        notes: "wahwahweewah"
+      };
+
+      return Pet.findOne()
+        .then(pet => {
+          updateData.id = pet.id;
+
+          return chai
+            .request(app)
+            .put(`/api/pets/${pet.id}`)
+            .set("Authorization", `Bearer ${test_token}`)
+            .send(updateData);
+        })
+
+        .then(res => {
+          res.should.have.status(204);
+          return Pet.findById(updateData.id);
+        })
+
+        .then(pet => {
+          pet.name.should.equal(updateData.name);
+          pet.breed.should.equal(updateData.breed);
+          pet.notes.should.equal(updateData.notes);
+        });
+    });
+  });
+
+  describe("DELETE endpoint", function() {
+    it("should delete a post by id", function() {
+      let pet;
+
+      return Pet.findOne()
+        .then(_pet => {
+          pet = _pet;
+          return chai
+            .request(app)
+            .delete(`/api/pets/${pet.id}`)
+            .set("Authorization", `Bearer ${test_token}`);
+        })
+        .then(res => {
+          res.should.have.status(204);
+          return Pet.findById(pet.id);
+        })
+        .then(_pet => {
+          should.not.exist(_pet);
+        });
+    });
+  });
 });
