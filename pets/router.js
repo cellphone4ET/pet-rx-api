@@ -48,9 +48,9 @@ router.post("/", jwtAuth, jsonParser, (req, res) => {
     phone: req.body.phone,
     allergies: req.body.allergies,
     chronic_conditions: req.body.chronic_conditions,
-    checkups: req.body.checkups,
-    vaccinations: req.body.vaccinations,
-    weight_history: req.body.weight_history,
+    checkups: [],
+    vaccinations: [],
+    weight_history: [],
     user: req.user.id
   })
     .then(Pet => res.status(201).json(Pet.serialize()))
