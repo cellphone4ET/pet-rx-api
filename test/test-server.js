@@ -175,7 +175,7 @@ describe("pet-rx api", function() {
         .send(newPet)
         .then(function(res) {
           expect(res).to.have.status(201);
-          expect(res.body).to.be.json;
+          expect(res).to.be.json;
           expect(res.body).to.be.a("object");
           expect(res.body).to.include.keys(
             "id",
