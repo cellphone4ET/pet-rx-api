@@ -150,48 +150,61 @@ describe("pet-rx api", function() {
         expect(resPet.phone).to.equal(pet.phone);
       });
   });
-  //
-  // describe("POST endpoint", function() {
-  //   it("should add a new family member", function() {
-  //     const newFamilyMember = {
-  //       name: faker.name.firstName(),
-  //       relation: faker.name.prefix(),
-  //       birthday: faker.random.number(60),
-  //       significant_other: faker.name.firstName(),
-  //       anniversary: faker.date.past(30),
-  //       notes: faker.lorem.sentences(),
-  //       photo_url: faker.image.avatar()
-  //     };
-  //
-  //     return chai
-  //       .request(app)
-  //       .post("/api/family-members")
-  //       .set("Authorization", `Bearer ${test_token}`)
-  //       .send(newFamilyMember)
-  //       .then(function(res) {
-  //         expect(res).to.have.status(201);
-  //         expect(res).to.be.json;
-  //         expect(res.body).to.be.a("object");
-  //         expect(res.body).to.include.keys(
-  //           "id",
-  //           "name",
-  //           "relation",
-  //           "birthday",
-  //           "photo_url"
-  //         );
-  //         expect(res.body.name).to.equal(newFamilyMember.name);
-  //         res.body.id.should.not.be.null;
-  //         res.body.relation.should.equal(newFamilyMember.relation);
-  //         expect(res.body.photo_url).to.equal(newFamilyMember.photo_url);
-  //         return FamilyMember.findById(res.body.id);
-  //       })
-  //       .then(function(FamilyMember) {
-  //         FamilyMember.name.should.equal(newFamilyMember.name);
-  //         FamilyMember.relation.should.equal(newFamilyMember.relation);
-  //         FamilyMember.photo_url.should.equal(newFamilyMember.photo_url);
-  //       });
-  //   });
-  // });
+
+  describe("POST endpoint", function() {
+    it("should add a new pet", function() {
+      const newPet = {
+        name: faker.name.firstName(),
+        photo_url: faker.image.avatar(),
+        breed: faker.lorem.word(),
+        age: faker.random.number(60),
+        notes: faker.lorem.sentences(),
+        vet_name: faker.name.firstName(),
+        phone: faker.lorem.word(),
+        allergies: faker.lorem.word(),
+        chronic_conditions: faker.lorem.word(),
+        checkups: [faker.lorem.word()],
+        vaccinations: [faker.lorem.word()],
+        weight_history: [faker.lorem.word()]
+      };
+
+      return chai
+        .request(app)
+        .post("/api/pets")
+        .set("Authorization", `Bearer ${test_token}`)
+        .send(newPet)
+        .then(function(res) {
+          expect(res).to.have.status(201);
+          expect(res.body).to.be.json;
+          expect(res.body).to.be.a("object");
+          expect(res.body).to.include.keys(
+            "id",
+            "name",
+            "photo_url",
+            "breed",
+            "age",
+            "notes",
+            "vet_name",
+            "phone",
+            "allergies",
+            "chronic_conditions",
+            "checkups",
+            "vaccinations",
+            "weight_history"
+          );
+          expect(res.body.name).to.equal(newPet.name);
+          res.body.id.should.not.be.null;
+          res.body.breed.should.equal(newPet.breed);
+          expect(res.body.photo_url).to.equal(newPet.photo_url);
+          return Pet.findById(res.body.id);
+        })
+        .then(function(Pet) {
+          Pet.name.should.equal(newPet.name);
+          Pet.breed.should.equal(newPet.breed);
+          Pet.photo_url.should.equal(newPet.photo_url);
+        });
+    });
+  });
   //
   // describe("PUT endpoint", function() {
   //   it("should update fields you send over", function() {
